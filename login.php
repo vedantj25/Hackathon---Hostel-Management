@@ -36,7 +36,7 @@
 
                     <form id="form1" >
                   <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">Welcome!
+                    <h1 class="h4 text-gray-900 mb-4"><H1> Welcome to Hostel Management </H1>
                       </h1>
                   </div>
 
