@@ -3,10 +3,12 @@
   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 </head>
 <body>
-  <div class="card">
+  <div class="content-wrapper">
+  <div class="card mb-6">
     <div class="card-body">
-      <p>Hello !</p>
+      <p></p>
     </div>
   </div>
+</div>
 </body>
 </html>
