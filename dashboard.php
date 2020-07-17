@@ -51,7 +51,7 @@
 
 </head>
 
-<body>
+<body class="m-0">
 	<?php include "header.php" ?>
 	<div id="msgDsp">
 		<?php
