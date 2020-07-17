@@ -85,7 +85,7 @@
                     <h1 class="h4 text-gray-900 mb-4" style=font-size:30px >Welcome To Hostel Management System!</h1>
                   </div>
 
-                  <form class="user">
+                  <form class="user" >
                     <div class="form-group">
                       <label class="control-label" for="uid">Username:</label>
                       <input type="text" class="form-control form-control-user" name="uid" placeholder="Username">
