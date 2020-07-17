@@ -50,19 +50,49 @@
   <link href="css/sb-admin-2.css" rel="stylesheet">
 
 </head>
+<?php
+      if(isset($_POST["uid"])){
+      $uid = $_POST["uid"];
+      $pwd = $_POST["pwd"];
+      $SQL = "SELECT * FROM login WHERE uid='$uid' and psw='$pwd'";
+      $rs = $conn->query($SQL);
+      if($rs)
+      {
+        while($result = $rs->fetch_assoc())
+        {
+        if($result['role'] == 'admin')
+        {
+          $_SESSION['MSG'] = " Success! Logged in Successfully.";
 
+          header("Location: dashboard.php");
+        }
+        else{
+
+        }
+
+
+    }
+}
+else
+{
+  $_SESSION['MSG'] = " Error! Incorrect Username or Password!";
+
+}
+}
+?>
 <body class="bg-login">
   <div class="container">
       <div id="msgDsp">
         <?php
-        if(isset($SESSION_MSG))
+
+        if(isset($_SESSION['MSG']))
         {
           $SESSION_MSG = $_SESSION['MSG'];
-        if(strpos($SESSION_MSG,"Error!") > 0){
-          echo "<div class='isa_error'><i class='fa fa-info-check'></i><p>".$SESSION_MSG."</p></div>";
-        }
-        elseif (strpos($SESSION_MSG,"Success!") > 0) {
-          echo "<div class='isa_success'><i class='fa fa-info-circle'></i><p>".$SESSION_MSG."</p></div>";
+          if(strpos($SESSION_MSG,"Error!") > 0){
+          echo "<div class='isa_error'><i class='fa fa-info-check'></i>".$SESSION_MSG."</div>";
+          }
+          elseif (strpos($SESSION_MSG,"Success!") > 0) {
+          echo "<div class='isa_success'><i class='fa fa-info-circle'></i>".$SESSION_MSG."</div>";
         }
 
         $_SESSION['MSG'] = "";
@@ -85,7 +115,7 @@
                     <h1 class="h4 text-gray-900 mb-4" style=font-size:30px >Welcome To Hostel Management System!</h1>
                   </div>
 
-                  <form class="user" >
+                  <form method="post" action="login.php">
                     <div class="form-group">
                       <label class="control-label" for="uid">Username:</label>
                       <input type="text" class="form-control form-control-user" name="uid" placeholder="Username">

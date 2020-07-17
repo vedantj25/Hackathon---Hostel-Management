@@ -1,133 +1,71 @@
-<?php
-session_start();
-include('includes/config.php');
-include('includes/checklogin.php');
-check_login();
-
-?>
-<!doctype html>
-<html lang="en" class="no-js">
+<?php include "dbConnection.php" ?>
+<!DOCTYPE html >
+<html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-	<meta name="description" content="">
-	<meta name="author" content="">
-	<meta name="theme-color" content="#3e454c">
 
-	<title>DashBoard</title>
-	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
-	<link rel="stylesheet" href="css/bootstrap-social.css">
-	<link rel="stylesheet" href="css/bootstrap-select.css">
-	<link rel="stylesheet" href="css/fileinput.min.css">
-	<link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css">
-	<link rel="stylesheet" href="css/style.css">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="google-signin-scope" content="profile email">
+  <meta name="google-signin-client_id" content="740030373267-95fegib4f55se03ltc1tenl7vlqp21ve.apps.googleusercontent.com">
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <title>Login - HMS</title>
+  <style>
+    @import url('//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
+  .isa_info, .isa_success, .isa_warning, .isa_error {
+  margin: 10px 0px;
+  padding:12px;
+
+  }
+  .isa_info {
+    color: #00529B;
+    background-color: #BDE5F8;
+  }
+  .isa_success {
+    color: #4F8A10;
+    background-color: #DFF2BF;
+  }
+  .isa_warning {
+    color: #9F6000;
+    background-color: #FEEFB3;
+  }
+  .isa_error {
+    color: #D8000C;
+    background-color: #FFD2D2;
+  }
+  .isa_info i, .isa_success i, .isa_warning i, .isa_error i {
+    margin:10px 22px;
+    font-size:2em;
+    vertical-align:middle;
+  }
+    </style>
+  <!-- Custom fonts for this template-->
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="css/sb-admin-2.css" rel="stylesheet">
 
 </head>
 
 <body>
-<?php include("includes/header.php");?>
+	<div id="msgDsp">
+		<?php
+		if(isset($SESSION_MSG))
+		{
+			$SESSION_MSG = $_SESSION['MSG'];
+		if(strpos($SESSION_MSG,"Error!") > 0){
+			echo "<div class='isa_error'><i class='fa fa-info-check'></i>".$SESSION_MSG."</div>";
+		}
+		elseif (strpos($SESSION_MSG,"Success!") > 0) {
+			echo "<div class='isa_success'><i class='fa fa-info-circle'></i>".$SESSION_MSG."</div>";
+		}
 
-	<div class="ts-main-content">
-		<?php include("includes/sidebar.php");?>
-		<div class="content-wrapper">
-			<div class="container-fluid">
-
-				<div class="row">
-					<div class="col-md-12">
-
-						<h2 class="page-title">Dashboard</h2>
-
-						<div class="row">
-							<div class="col-md-12">
-								<div class="row">
-									<div class="col-md-3">
-										<div class="panel panel-default">
-											<div class="panel-body bk-primary text-light">
-												<div class="stat-panel text-center">
-
-
-
-													<div class="stat-panel-number h1 ">My Profile</div>
-
-												</div>
-											</div>
-											<a href="my-profile.php" class="block-anchor panel-footer">Full Detail <i class="fa fa-arrow-right"></i></a>
-										</div>
-									</div>
-									<div class="col-md-3">
-										<div class="panel panel-default">
-											<div class="panel-body bk-success text-light">
-												<div class="stat-panel text-center">
-
-												<div class="stat-panel-number h1 ">My Room</div>
-
-												</div>
-											</div>
-											<a href="room-details.php" class="block-anchor panel-footer text-center">See All &nbsp; <i class="fa fa-arrow-right"></i></a>
-										</div>
-									</div>
-
-								</div>
-							</div>
-						</div>
-
-
-
-
-
-					</div>
-				</div>
-
-			</div>
-		</div>
-	</div>
-
-	<!-- Loading Scripts -->
-	<script src="js/jquery.min.js"></script>
-	<script src="js/bootstrap-select.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/jquery.dataTables.min.js"></script>
-	<script src="js/dataTables.bootstrap.min.js"></script>
-	<script src="js/Chart.min.js"></script>
-	<script src="js/fileinput.js"></script>
-	<script src="js/chartData.js"></script>
-	<script src="js/main.js"></script>
-
-	<script>
-
-	window.onload = function(){
-
-		// Line chart from swirlData for dashReport
-		var ctx = document.getElementById("dashReport").getContext("2d");
-		window.myLine = new Chart(ctx).Line(swirlData, {
-			responsive: true,
-			scaleShowVerticalLines: false,
-			scaleBeginAtZero : true,
-			multiTooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>",
-		});
-
-		// Pie Chart from doughutData
-		var doctx = document.getElementById("chart-area3").getContext("2d");
-		window.myDoughnut = new Chart(doctx).Pie(doughnutData, {responsive : true});
-
-		// Dougnut Chart from doughnutData
-		var doctx = document.getElementById("chart-area4").getContext("2d");
-		window.myDoughnut = new Chart(doctx).Doughnut(doughnutData, {responsive : true});
-
+		$_SESSION['MSG'] = "";
 	}
-	</script>
-
-</body>
-
-<div class="foot"><footer>
-<p> Brought To You By <a href="https://code-projects.org/">Code-Projects</p>
-</footer> </div>
-
-
-<style> .foot{text-align: center; border: 1px solid black;}</style>
+	?>
+	</body>
 </html>
