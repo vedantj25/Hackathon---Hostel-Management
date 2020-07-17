@@ -70,7 +70,6 @@
 
 									<tbody>
 <?php
-$aid=$_SESSION['login'];
 	$ret="select * from registration where emailid='vedant@gmail.com'";
 $stmt= $conn->query($ret) ;
 $cnt=1;
