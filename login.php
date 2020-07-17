@@ -54,7 +54,7 @@
       if(isset($_POST["uid"])){
       $uid = $_POST["uid"];
       $pwd = $_POST["pwd"];
-      $SQL = "SELECT * FROM login WHERE uid='$uid' and psw='$pwd'";
+      $SQL = "SELECT *, count('uid') FROM login WHERE uid='$uid' and psw='$pwd'";
       $rs = $conn->query($SQL);
       if($rs)
       {
@@ -72,33 +72,18 @@
 
 
     }
-}
-else
-{
-  $_SESSION['MSG'] = " Error! Incorrect Username or Password!";
 
-}
+  }
+  else
+  {
+    $_SESSION['MSG'] = " Error! Incorrect Username or Password!";
+
+  }
 }
 ?>
 <body class="bg-login">
   <div class="container">
-      <div id="msgDsp">
-        <?php
 
-        if(isset($_SESSION['MSG']))
-        {
-          $SESSION_MSG = $_SESSION['MSG'];
-          if(strpos($SESSION_MSG,"Error!") > 0){
-          echo "<div class='isa_error'><i class='fa fa-info-check'></i>".$SESSION_MSG."</div>";
-          }
-          elseif (strpos($SESSION_MSG,"Success!") > 0) {
-          echo "<div class='isa_success'><i class='fa fa-info-circle'></i>".$SESSION_MSG."</div>";
-        }
-
-        $_SESSION['MSG'] = "";
-      }
-        ?>
-  </div>
   <div class="container">
 
     <!-- Outer Row -->
@@ -108,8 +93,24 @@ else
         <div class="card o-hidden shadow-lg my-5 animated--grow-in">
           <div class="card-body border-success p-3">
             <!-- Nested Row within Card Body -->
+            <div class="container">
+                <div id="msgDsp">
+                  <?php
 
+                  if(isset($_SESSION['MSG']))
+                  {
+                    $SESSION_MSG = $_SESSION['MSG'];
+                    if(strpos($SESSION_MSG,"Error!") > 0){
+                    echo "<div class='isa_error'><i class='fa fa-info-check'></i>".$SESSION_MSG."</div>";
+                    }
+                    elseif(strpos($SESSION_MSG,"Success!") > 0) {
+                    echo "<div class='isa_success'><i class='fa fa-info-circle'></i>".$SESSION_MSG."</div>";
+                  }
 
+                  $_SESSION['MSG'] = "";
+                }
+                  ?>
+                </div>
                 <div class="p-5 ">
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4" style=font-size:30px >Welcome To Hostel Management System!</h1>
