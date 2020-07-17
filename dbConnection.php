@@ -1,11 +1,14 @@
 <?php
-session_start();
-$host = "localhost";
+$servername = "localhost";
 $username = "root";
-$pwd = "";
+$password = "";
+session_start();
+// Create connection
+$conn = new mysqli($servername, $username, $password);
 
-$conn = new mysqli($host,$username,$pwd);
-if(!$conn){
-
+// Check connection
+if ($conn->connect_error) {
+  $_SESSION['MSG'] = " Error! " . $conn->connect_error;
+  die();
 }
 ?>
