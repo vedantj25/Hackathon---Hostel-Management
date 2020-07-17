@@ -1,8 +1,8 @@
 <?php
 
 include('dbConnection.php');
-include('includes/checklogin.php');
-check_login();
+
+
 
 if(isset($_GET['del']))
 {

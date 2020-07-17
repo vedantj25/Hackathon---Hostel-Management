@@ -111,7 +111,7 @@ if($stmt->execute()){
   $_SESSION['MSG'] = " Success!";
 }
 else {
-  $_SESSION['MSG'] = " Error!";
+  $_SESSION['MSG'] = " Error!" . $conn->error;
 }
 $stmt->close();
 
@@ -140,6 +140,18 @@ $stmt->close();
 
 	          <!-- Content Row -->
 
+            <div id="msgDsp">
+                    <?php $SESSION_MSG = $_SESSION['MSG'];
+                    if(strpos($SESSION_MSG,"Error!") > 0){
+                      echo "<div class='isa_error'><i class='fa fa-info-check'></i>".$SESSION_MSG."</div>";
+                    }
+                    elseif (strpos($SESSION_MSG,"Success!") > 0) {
+                      echo "<div class='isa_success'><i class='fa fa-info-circle'></i>".$SESSION_MSG."</div>";
+                    }
+                    $_SESSION['MSG'] = " ";
+
+                    ?>
+              </div>
 <div>
               <form method="post" action="add_student.php" class="form-horizontal">
 
@@ -305,21 +317,21 @@ while($row=$res->fetch_object())
   </div>
 
   <div class="form-group">
-  <label class="col-lg-4 control-label">Guardian  Name : </label>
+  <label class="col-lg-4 control-label">Guardian/Parent  Name : </label>
   <div class="col-lg-6">
   <input type="text" name="gname" id="gname"  class="form-control" required="required">
   </div>
   </div>
 
   <div class="form-group">
-  <label class="col-lg-4 control-label">Guardian  Relation : </label>
+  <label class="col-lg-4 control-label">Guardian/Parent  Relation : </label>
   <div class="col-lg-6">
   <input type="text" name="grelation" id="grelation"  class="form-control" required="required">
   </div>
   </div>
 
   <div class="form-group">
-  <label class="col-lg-4 control-label">Guardian Contact no : </label>
+  <label class="col-lg-4 control-label">Guardian/Parent Contact no : </label>
   <div class="col-lg-6">
   <input type="text" name="gcontact" id="gcontact"  class="form-control" required="required">
   </div>
@@ -400,6 +412,15 @@ while($row=$res->fetch_object())
   <div class="col-lg-6">
   <select name="pstate" id="pstate"class="form-control" required>
   <option value="">Select State</option>
+  <?php $query ="SELECT * FROM states";
+  $stmt2 = $conn->prepare($query);
+  $stmt2->execute();
+  $res=$stmt2->get_result();
+  while($row=$res->fetch_object())
+  {
+  ?>
+  <option value="<?php echo $row->State;?>"><?php echo $row->State;?></option>
+  <?php } ?>
   </select> </div>
   </div>
 

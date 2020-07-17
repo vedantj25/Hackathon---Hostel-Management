@@ -1,8 +1,8 @@
 <?php
 
 include('dbConnection.php');
-include('includes/checklogin.php');
-check_login();
+
+
 //code for add courses
 if($_POST['submit'])
 {

@@ -20,8 +20,8 @@
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="buttons.html">Add room</a>
-            <a class="collapse-item" href="cards.html">Manage Rooms</a>
+            <a class="collapse-item" href="add_room.php">Add room</a>
+            <a class="collapse-item" href="manage-rooms.php">Manage Rooms</a>
           </div>
         </div>
       </li>
@@ -34,28 +34,15 @@
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="add_student.php">Add Student</a>
-            <a class="collapse-item" href="utilities-border.html">Manage Students</a>
+            <a class="collapse-item" href="manage-students.php">Manage Students</a>
           </div>
         </div>
       </li>
 
       <!-- Divider -->
-      <hr class="sidebar-divider">
 
       <!-- Heading -->
       <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-          <span>Staff</span>
-        </a>
-        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="login.html">Add Staff</a>
-            <a class="collapse-item" href="register.html">Manage Staff</a>
-          </div>
-        </div>
-      </li>
-
       <!-- Nav Item - Charts -->
 
       <!-- Divider -->
@@ -101,15 +88,10 @@
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="admin_profile.php">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                   Profile
                 </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Settings
-                </a>
-
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>

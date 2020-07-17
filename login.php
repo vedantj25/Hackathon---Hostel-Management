@@ -66,8 +66,10 @@
 
           header("Location: dashboard.php");
         }
-        else{
+        elseif($result['role'] == 'user'){
+          $_SESSION['MSG'] = " Success! Logged in Successfully.";
 
+          header("Location: student_dashboard.php");
         }
 
 
@@ -132,6 +134,7 @@
                       </div>
                     </div>
                     <input type="submit" class="btn btn-primary btn-user btn-block" text="Login">
+                    <a href="registration.php">New User ? Register Here </a>
                    </form>
 
 

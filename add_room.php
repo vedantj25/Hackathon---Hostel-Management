@@ -11,7 +11,7 @@
   <meta name="google-signin-scope" content="profile email">
   <meta name="google-signin-client_id" content="740030373267-95fegib4f55se03ltc1tenl7vlqp21ve.apps.googleusercontent.com">
   <script src="https://apis.google.com/js/platform.js" async defer></script>
-  <title>Add room - HMS</title>
+  <title>Add Room - HMS</title>
   <style>
     @import url('//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
@@ -50,6 +50,32 @@
   <link href="css/sb-admin-2.css" rel="stylesheet">
 
 </head>
+<?php
+if(isset($_POST['submit']))
+{
+$seater=$_POST['seater'];
+$roomno=$_POST['rmno'];
+$fees=$_POST['fee'];
+$sql="SELECT room_no FROM rooms where room_no=?";
+$stmt1 = $conn->prepare($sql);
+$stmt1->bind_param('i',$roomno);
+$stmt1->execute();
+$stmt1->store_result();
+$row_cnt=$stmt1->num_rows;;
+if($row_cnt>0)
+{
+echo"<script>alert('Room alreadt exist');</script>";
+}
+else
+{
+$query="insert into  rooms (seater,room_no,fees) values(?,?,?)";
+$stmt = $conn->prepare($query);
+$rc=$stmt->bind_param('iii',$seater,$roomno,$fees);
+$stmt->execute();
+echo"<script>alert('Room has been added successfully');</script>";
+}
+}
+?>
 
 <body>
 	<body id="page-top">
