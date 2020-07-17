@@ -48,10 +48,33 @@
 
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.css" rel="stylesheet">
+  <script>
+  function getSeater(val) {
+  $.ajax({
+  type: "POST",
+  url: "get_seater.php",
+  data:'roomid='+val,
+  success: function(data){
+  //alert(data);
+  $('#seater').val(data);
+  }
+  });
+
+  $.ajax({
+  type: "POST",
+  url: "get_seater.php",
+  data:'rid='+val,
+  success: function(data){
+  //alert(data);
+  $('#fpm').val(data);
+  }
+  });
+  }
+  </script>
 
 </head>
 <?php
-if($_POST['submit'])
+if(isset($_POST['submit']))
 {
 $roomno=$_POST['room'];
 $seater=$_POST['seater'];
@@ -82,19 +105,19 @@ $ppincode=$_POST['ppincode'];
 
 $query="insert into registration(roomno,seater,feespm,foodstatus,stayfrom,duration,course,regno,firstName,middleName,lastName,gender,contactno,emailid,egycontactno,guardianName,guardianRelation,guardianContactno,corresAddress,corresCIty,corresState,corresPincode,pmntAddress,pmntCity,pmnatetState,pmntPincode)
   values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-$stmt = $mysqli->prepare($query);
+$stmt = $conn->prepare($query);
 $rc=$stmt->bind_param('iiiisisissssisississsisssi',$roomno,$seater,$feespm,$foodstatus,$stayfrom,$duration,$course,$regno,$fname,$mname,$lname,$gender,$contactno,$emailid,$emcntno,$gurname,$gurrelation,$gurcntno,$caddress,$ccity,$cstate,$cpincode,$paddress,$pcity,$pstate,$ppincode);
-$stmt->execute();
+if($stmt->execute()){
+  $_SESSION['MSG'] = " Success!";
+}
+else {
+  $_SESSION['MSG'] = " Error!";
+}
 $stmt->close();
 
 }
 ?>
 
-
-
-
-
-<body>
 	<body id="page-top">
 
   <!-- Page Wrapper -->
@@ -130,7 +153,15 @@ $stmt->close();
   <div class="col-lg-6">
   <select name="room" id="room"class="form-control"  onChange="getSeater(this.value);" onBlur="checkAvailability()" required>
   <option value="">Select Room</option>
-
+  <?php $query ="SELECT * FROM rooms";
+  $stmt2 = $conn->prepare($query);
+  $stmt2->execute();
+  $res=$stmt2->get_result();
+  while($row=$res->fetch_object())
+  {
+  ?>
+  <option value="<?php echo $row->room_no;?>"> <?php echo $row->room_no;?></option>
+  <?php } ?>
   </select>
   <span id="room-availability-status" style="font-size:12px;"></span>
 
@@ -197,7 +228,16 @@ $stmt->close();
   <div class="col-lg-6">
   <select name="course" id="course" class="form-control" required>
   <option value="">Select Course</option>
-
+  <option value="">Select Course</option>
+<?php $query ="SELECT * FROM courses";
+$stmt2 = $conn->prepare($query);
+$stmt2->execute();
+$res=$stmt2->get_result();
+while($row=$res->fetch_object())
+{
+?>
+<option value="<?php echo $row->course_fn;?>"><?php echo $row->course_fn;?>&nbsp;&nbsp;(<?php echo $row->course_sn;?>)</option>
+<?php } ?>
   </select> </div>
   </div>
 
@@ -309,7 +349,15 @@ $stmt->close();
   <div class="col-lg-6">
   <select name="state" id="state"class="form-control" required>
   <option value="">Select State</option>
-
+  <?php $query ="SELECT * FROM states";
+  $stmt2 = $conn->prepare($query);
+  $stmt2->execute();
+  $res=$stmt2->get_result();
+  while($row=$res->fetch_object())
+  {
+  ?>
+  <option value="<?php echo $row->State;?>"><?php echo $row->State;?></option>
+  <?php } ?>
   </select> </div>
   </div>
 
@@ -412,15 +460,32 @@ $stmt->close();
   <!-- Page level custom scripts -->
   <script src="js/demo/chart-area-demo.js"></script>
   <script src="js/demo/chart-pie-demo.js"></script>
-	<script>
-function Nav() {
-	document.getElementById("mySidebar").style.width = "250px";
-  document.getElementById("main").style.marginLeft = "250px";
-}
+  <script type="text/javascript">
+	$(document).ready(function(){
+        $('input[type="checkbox"]').click(function(){
+            if($(this).prop("checked") == true){
+                $('#paddress').val( $('#address').val() );
+                $('#pcity').val( $('#city').val() );
+                $('#pstate').val( $('#state').val() );
+                $('#ppincode').val( $('#pincode').val() );
+            }
 
-function closeNav() {
-  document.getElementById("accordionSidebar").style.width = "0";
-  document.getElementById("wrapper").style.marginLeft= "0";
+        });
+    });
+</script>
+<script>
+function checkAvailability() {
+$("#loaderIcon").show();
+jQuery.ajax({
+url: "check_availability.php",
+data:'roomno='+$("#room").val(),
+type: "POST",
+success:function(data){
+$("#room-availability-status").html(data);
+$("#loaderIcon").hide();
+},
+error:function (){}
+});
 }
 </script>
 
