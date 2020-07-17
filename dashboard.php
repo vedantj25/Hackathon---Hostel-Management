@@ -52,6 +52,7 @@
 </head>
 
 <body>
+	<?php include "header.php" ?>
 	<div id="msgDsp">
 		<?php
 		if(isset($SESSION_MSG))
